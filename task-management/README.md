@@ -225,7 +225,7 @@ Chi tiết và ví dụ có trong [.env.example](.env.example).
 
 ### Giao diện web
 
-1. Mở http://localhost:8080 và đăng nhập bằng tài khoản demo (bấm **Điền sẵn** để tự điền), hoặc chọn **Đăng ký** để tạo tài khoản mới.
+1. Mở http://localhost:8080 và đăng nhập bằng tài khoản demo `alice@example.com` / `Password@123`, hoặc chọn **Đăng ký** để tạo tài khoản mới.
    Phiên đăng nhập gắn với tab đang mở: tải lại trang vẫn giữ đăng nhập, còn mở tab mới hoặc mở lại trình duyệt thì cần đăng nhập lại.
 2. **Dashboard:** xem tổng số task, số task theo trạng thái, số task quá hạn và các task sắp đến hạn.
 3. **Công việc:**
