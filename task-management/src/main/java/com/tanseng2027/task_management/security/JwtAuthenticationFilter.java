@@ -18,10 +18,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
-/**
- * Đọc header "Authorization: Bearer <token>", kiểm tra token và gắn user vào SecurityContext.
- * Token sai / hết hạn / đã đăng xuất thì bỏ qua (request được coi là chưa đăng nhập → Spring Security trả 401).
- */
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {

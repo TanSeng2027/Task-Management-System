@@ -7,10 +7,6 @@ import com.tanseng2027.task_management.entity.TaskStatus;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-/**
- * Gợi ý task do AI tạo ra. Chỉ là gợi ý: frontend điền vào form để người dùng kiểm tra,
- * chỉnh sửa rồi mới lưu bằng POST /api/tasks.
- */
 public record AiTaskSuggestion(
         @Schema(example = "Nộp báo cáo quý cho sếp")
         String title,

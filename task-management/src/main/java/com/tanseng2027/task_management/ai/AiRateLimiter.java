@@ -12,13 +12,6 @@ import org.springframework.stereotype.Component;
 
 import com.tanseng2027.task_management.ai.AiException.Reason;
 
-/**
- * Giới hạn số lần gọi AI (cửa sổ trượt) để bảo vệ hạn mức miễn phí của Gemini:
- * - Mỗi user: tối đa {@code ai.max-requests-per-hour} lần / 1 giờ (1 người không dùng hết lượt của người khác).
- * - Toàn app: tối đa {@code ai.max-requests-per-day} lần / 24 giờ (khi deploy công khai, 1 người tạo
- *   nhiều tài khoản cũng không đốt hết hạn mức). Giá trị 0 = không giới hạn.
- * Lưu trong bộ nhớ: đủ cho 1 instance; nếu chạy nhiều instance cần chuyển sang Redis.
- */
 @Component
 public class AiRateLimiter {
 

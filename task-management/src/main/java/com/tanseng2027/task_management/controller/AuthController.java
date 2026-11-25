@@ -55,10 +55,6 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(request));
     }
 
-    /**
-     * Đăng xuất: thu hồi token đang dùng. Cần header "Authorization: Bearer <token>".
-     * Endpoint này yêu cầu đăng nhập (xem SecurityConfig) nên tới đây token chắc chắn hợp lệ.
-     */
     @Operation(summary = "Đăng xuất",
             description = "Thu hồi token đang dùng. Sau khi đăng xuất, mọi request dùng token này đều bị 401.")
     @ApiResponse(responseCode = "204", description = "Đăng xuất thành công")

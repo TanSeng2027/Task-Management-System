@@ -56,12 +56,7 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-    /**
-     * Content-Security-Policy cho giao diện web: chỉ chạy script / CSS / gọi API từ chính web này.
-     * Frontend không có script inline hay tài nguyên bên ngoài, nên nếu có lỗi XSS thì mã lạ
-     * chèn vào trang cũng không chạy được, và cũng không gửi được dữ liệu (vd token) ra ngoài.
-     */
+    
     static final String APP_CSP = "default-src 'self'; script-src 'self'; style-src 'self'; "
             + "img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; "
             + "base-uri 'self'; form-action 'self'; frame-ancestors 'self'";

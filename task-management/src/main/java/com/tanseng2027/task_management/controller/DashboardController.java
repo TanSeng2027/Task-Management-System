@@ -26,10 +26,6 @@ public class DashboardController {
 
     private final DashboardService dashboardService;
 
-    /**
-     * Thống kê task của user đang đăng nhập.
-     * Ví dụ: GET /api/dashboard?days=7  (days: 1..30, mặc định 7)
-     */
     @Operation(summary = "Thống kê task",
             description = """
                     Tổng số task, số task theo từng trạng thái, số task quá hạn

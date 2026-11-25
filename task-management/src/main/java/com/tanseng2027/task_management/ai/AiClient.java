@@ -2,11 +2,6 @@ package com.tanseng2027.task_management.ai;
 
 import java.util.Map;
 
-/**
- * Lớp trung gian gọi mô hình AI. Phần còn lại của app chỉ phụ thuộc interface này,
- * nên muốn đổi nhà cung cấp (Gemini → Claude, DeepSeek, model chạy local...) chỉ cần viết thêm 1 class.
- * Trong test dùng bản giả (mock) nên không cần API key và không tốn hạn mức.
- */
 public interface AiClient {
 
     /** false khi chưa cấu hình API key → frontend ẩn các nút AI. */

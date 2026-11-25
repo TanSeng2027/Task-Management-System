@@ -13,10 +13,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Body cho tạo mới (POST) và cập nhật (PUT) task.
- * status / priority để trống: khi tạo mới sẽ dùng TODO / MEDIUM, khi cập nhật sẽ giữ nguyên giá trị cũ.
- */
 @Data
 @Builder
 @AllArgsConstructor

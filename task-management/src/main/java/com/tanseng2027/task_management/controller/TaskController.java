@@ -44,10 +44,6 @@ public class TaskController {
 
     private final TaskService taskService;
 
-    /**
-     * Danh sách task của user, có tìm kiếm, lọc và phân trang.
-     * Ví dụ: GET /api/tasks?search=api&status=TODO&priority=HIGH&page=0&size=10&sort=dueDate,asc
-     */
     @Operation(summary = "Danh sách task (tìm kiếm, lọc, phân trang)",
             description = """
                     Các tham số đều không bắt buộc, có thể kết hợp với nhau.

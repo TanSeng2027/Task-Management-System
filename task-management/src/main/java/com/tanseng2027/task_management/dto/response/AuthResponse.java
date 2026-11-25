@@ -6,9 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Kết quả đăng nhập: JWT + thông tin cơ bản của user (để frontend hiển thị, không cần decode token).
- */
 @Data
 @Builder
 @AllArgsConstructor

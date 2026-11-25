@@ -4,9 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-/**
- * Câu mô tả công việc bằng ngôn ngữ tự nhiên, vd: "Nộp báo cáo quý cho sếp trước 5h chiều thứ 6, gấp".
- */
 public record AiParseTaskRequest(
         @Schema(example = "Nộp báo cáo quý cho sếp trước 5h chiều thứ 6, gấp")
         @NotBlank(message = "Vui lòng nhập mô tả công việc")

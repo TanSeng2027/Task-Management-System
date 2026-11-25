@@ -2,10 +2,7 @@ package com.tanseng2027.task_management.ai;
 
 import lombok.Getter;
 
-/**
- * Lỗi khi dùng tính năng AI. Message là câu tiếng Việt hiển thị được cho người dùng.
- * GlobalExceptionHandler chuyển {@link Reason} thành HTTP status phù hợp.
- */
+
 @Getter
 public class AiException extends RuntimeException {
 

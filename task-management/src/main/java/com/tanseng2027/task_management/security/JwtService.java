@@ -28,10 +28,6 @@ public class JwtService {
 
     private static final int MIN_SECRET_BYTES = 32; // HS256 yêu cầu key tối thiểu 256 bit
 
-    /**
-     * Kiểm tra JWT_SECRET ngay khi khởi động để báo lỗi rõ ràng,
-     * thay vì đợi tới lúc đăng nhập mới lỗi.
-     */
     @PostConstruct
     void validateSecret() {
         byte[] keyBytes;

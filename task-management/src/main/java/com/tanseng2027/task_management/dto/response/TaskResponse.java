@@ -12,9 +12,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Dữ liệu task trả về cho client. Không trả về entity trực tiếp để tránh lộ thông tin user (password...).
- */
 @Data
 @Builder
 @AllArgsConstructor

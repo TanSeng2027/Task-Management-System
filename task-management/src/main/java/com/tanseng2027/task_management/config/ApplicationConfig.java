@@ -13,11 +13,7 @@ import com.tanseng2027.task_management.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
-/**
- * Bean dùng cho xác thực.
- * Spring Security tự tạo DaoAuthenticationProvider từ 2 bean UserDetailsService + PasswordEncoder bên dưới
- * (tìm user theo email, so mật khẩu bằng BCrypt), nên không cần tự khai báo AuthenticationProvider.
- */
+
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {

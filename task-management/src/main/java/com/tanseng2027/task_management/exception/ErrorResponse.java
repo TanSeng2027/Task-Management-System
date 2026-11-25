@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
- * Format JSON thống nhất cho mọi lỗi trả về từ API.
- *
  * @param errors chi tiết lỗi theo từng field (chỉ có khi lỗi validation), null nếu không có
  */
 public record ErrorResponse(

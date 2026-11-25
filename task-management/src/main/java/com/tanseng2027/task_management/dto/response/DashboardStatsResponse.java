@@ -7,9 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Thống kê task của user đang đăng nhập.
- */
 @Data
 @Builder
 @AllArgsConstructor

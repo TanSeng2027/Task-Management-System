@@ -1,7 +1,3 @@
-# Không đưa các file này vào Docker build context:
-# - secret (.env) không được nằm trong image
-# - output build cũ và file của IDE/git chỉ làm build chậm hơn
-
 .env
 .env.*
 target/

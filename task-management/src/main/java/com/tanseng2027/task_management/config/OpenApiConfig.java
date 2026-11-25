@@ -8,14 +8,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
-/**
- * Cấu hình Swagger / OpenAPI.
- *  - Swagger UI:   http://localhost:8080/swagger-ui.html
- *  - OpenAPI JSON: http://localhost:8080/v3/api-docs
- *
- * Mọi API mặc định yêu cầu JWT (security = bearerAuth). API public (register, login)
- * bỏ yêu cầu này bằng @SecurityRequirements() trong AuthController.
- */
+
 @Configuration
 @OpenAPIDefinition(
         info = @Info(

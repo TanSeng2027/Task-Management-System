@@ -11,10 +11,6 @@ import com.tanseng2027.task_management.entity.TaskStatus;
 
 import jakarta.persistence.criteria.Predicate;
 
-/**
- * Tạo điều kiện WHERE động cho tìm kiếm / lọc task.
- * Tham số nào null hoặc rỗng thì bỏ qua điều kiện đó.
- */
 public final class TaskSpecification {
 
     private TaskSpecification() {

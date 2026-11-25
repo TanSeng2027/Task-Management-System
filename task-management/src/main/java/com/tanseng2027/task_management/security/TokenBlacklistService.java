@@ -17,9 +17,6 @@ import com.tanseng2027.task_management.repository.RevokedTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * Quản lý danh sách token đã đăng xuất (blacklist).
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor

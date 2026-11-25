@@ -6,9 +6,6 @@ import java.util.function.Function;
 import org.springframework.data.domain.Page;
 
 /**
- * Kết quả phân trang. Dùng class riêng thay vì trả thẳng Page của Spring
- * để format JSON ổn định và dễ đọc cho frontend.
- *
  * @param page số trang hiện tại, bắt đầu từ 0
  */
 public record PageResponse<T>(

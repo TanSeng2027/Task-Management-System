@@ -17,15 +17,6 @@ import tools.jackson.core.JacksonException;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.json.JsonMapper;
 
-/**
- * Gọi Google Gemini qua Interactions API (POST /v1beta/interactions) với Structured Output:
- * model được yêu cầu trả về JSON theo đúng schema truyền vào.
- *
- * Request:  { model, system_instruction, input, response_format: {type, mime_type, schema}, generation_config }
- * Response: { status: "completed", steps: [ { type: "model_output", content: [ {type: "text", text: "..."} ] } ] }
- *
- * Không ghi log nội dung người dùng nhập hoặc kết quả của model (chỉ log mã lỗi).
- */
 @Slf4j
 public class GeminiAiClient implements AiClient {
 
