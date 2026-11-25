@@ -8,6 +8,21 @@
 const TOKEN_KEY = 'taskManager.token';
 const USER_KEY = 'taskManager.user';
 
+// Token + thông tin user lưu trong sessionStorage, KHÔNG dùng localStorage:
+// đóng tab / tắt trình duyệt là tự đăng xuất, nên trên máy dùng chung người sau không vào được
+// tài khoản (và không thấy email, họ tên) của người trước dù họ quên bấm "Đăng xuất".
+// Tải lại trang (F5) vẫn giữ đăng nhập. Rủi ro XSS đọc token được giảm thêm bằng header
+// Content-Security-Policy ở backend (xem SecurityConfig).
+const store = (() => {
+  try { return window.sessionStorage; } catch { return null; } // có thể bị chặn (chế độ riêng tư...)
+})();
+
+// Bản cũ lưu trong localStorage: xóa đi để không còn sót token / thông tin cá nhân trên máy
+try {
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
+} catch { /* bỏ qua */ }
+
 export class ApiError extends Error {
   constructor(status, message, fieldErrors = null) {
     super(message);
@@ -16,16 +31,19 @@ export class ApiError extends Error {
   }
 }
 
-// localStorage có thể bị chặn (chế độ riêng tư...) nên luôn bọc try/catch
 export const auth = {
   get token() {
-    try { return localStorage.getItem(TOKEN_KEY); } catch { return null; }
+    try { return store?.getItem(TOKEN_KEY) ?? null; } catch { return null; }
   },
   /** Lưu kết quả đăng nhập (AuthResponse): token + thông tin user để hiển thị. */
   save(authResponse) {
+    // Chỉ lưu khi server thật sự trả về token, tránh lưu "undefined" rồi tưởng là đã đăng nhập
+    if (typeof authResponse?.accessToken !== 'string' || !authResponse.accessToken) {
+      throw new ApiError(0, 'Phản hồi đăng nhập không hợp lệ, vui lòng thử lại');
+    }
     try {
-      localStorage.setItem(TOKEN_KEY, authResponse.accessToken);
-      localStorage.setItem(USER_KEY, JSON.stringify({
+      store?.setItem(TOKEN_KEY, authResponse.accessToken);
+      store?.setItem(USER_KEY, JSON.stringify({
         email: authResponse.email,
         fullName: authResponse.fullName,
       }));
@@ -33,14 +51,14 @@ export const auth = {
   },
   clear() {
     try {
-      localStorage.removeItem(TOKEN_KEY);
-      localStorage.removeItem(USER_KEY);
+      store?.removeItem(TOKEN_KEY);
+      store?.removeItem(USER_KEY);
     } catch { /* bỏ qua */ }
   },
   /** { email, fullName } của user đang đăng nhập. Chỉ để hiển thị, không dùng để phân quyền. */
   get user() {
     try {
-      return JSON.parse(localStorage.getItem(USER_KEY)) || { email: '', fullName: '' };
+      return JSON.parse(store?.getItem(USER_KEY) ?? 'null') || { email: '', fullName: '' };
     } catch {
       return { email: '', fullName: '' };
     }
@@ -57,11 +75,21 @@ const DEFAULT_MESSAGES = {
 };
 
 /**
- * @param {string} path      ví dụ "/api/tasks"
+ * @param {string} path      đường dẫn trên CHÍNH server này, ví dụ "/api/tasks"
  * @param {object} options   { method, body, query, requireAuth }
+ *
+ * requireAuth = false cho các API xác thực bằng mật khẩu (đăng nhập, đăng ký): không gửi token cũ,
+ * và lỗi 401 khi đó nghĩa là "sai email/mật khẩu" chứ không phải "hết phiên" (không tự đăng xuất).
+ * Nếu sau này thêm "đổi mật khẩu" (cần token), backend nên trả 400 khi sai mật khẩu hiện tại,
+ * vì 401 ở API cần đăng nhập sẽ bị hiểu là hết phiên và đẩy người dùng ra màn hình đăng nhập.
  */
 export async function api(path, { method = 'GET', body, query, requireAuth = true } = {}) {
   const url = new URL(path, window.location.origin);
+  // Chặn gửi token sang tên miền khác: new URL() bỏ qua origin gốc nếu path là URL đầy đủ
+  // ("https://evil.com/...") hoặc bắt đầu bằng "//evil.com"
+  if (url.origin !== window.location.origin) {
+    throw new ApiError(0, 'Địa chỉ API không hợp lệ');
+  }
   if (query) {
     for (const [key, value] of Object.entries(query)) {
       if (value !== undefined && value !== null && value !== '') url.searchParams.set(key, value);

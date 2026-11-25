@@ -13,6 +13,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.tanseng2027.task_management.security.JwtAuthenticationFilter;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -45,8 +47,35 @@ public class SecurityConfig {
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
             );
 
-        http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
+        http.headers(headers -> headers
+            // Chống clickjacking: chỉ cho phép nhúng trang vào iframe của CHÍNH web này
+            // (H2 console dùng iframe cùng origin nên vẫn chạy được)
+            .frameOptions(frame -> frame.sameOrigin())
+            .addHeaderWriter(SecurityConfig::writeContentSecurityPolicy)
+        );
 
         return http.build();
+    }
+
+    /**
+     * Content-Security-Policy cho giao diện web: chỉ chạy script / CSS / gọi API từ chính web này.
+     * Frontend không có script inline hay tài nguyên bên ngoài, nên nếu có lỗi XSS thì mã lạ
+     * chèn vào trang cũng không chạy được, và cũng không gửi được dữ liệu (vd token) ra ngoài.
+     */
+    static final String APP_CSP = "default-src 'self'; script-src 'self'; style-src 'self'; "
+            + "img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; "
+            + "base-uri 'self'; form-action 'self'; frame-ancestors 'self'";
+
+    /** Swagger UI tự gắn CSS inline nên cần 'unsafe-inline' cho style; script vẫn chỉ từ chính web. */
+    static final String SWAGGER_CSP = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
+            + "img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'";
+
+    private static void writeContentSecurityPolicy(HttpServletRequest request, HttpServletResponse response) {
+        String path = request.getRequestURI().substring(request.getContextPath().length());
+        if (path.startsWith("/h2-console")) {
+            return; // H2 console (chỉ bật khi chạy local) dùng nhiều script inline, không áp CSP
+        }
+        boolean swagger = path.startsWith("/swagger-ui") || path.startsWith("/v3/api-docs");
+        response.setHeader("Content-Security-Policy", swagger ? SWAGGER_CSP : APP_CSP);
     }
 }

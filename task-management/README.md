@@ -13,7 +13,8 @@ bảng Kanban, danh sách và dashboard. Có thêm tính năng **tạo task bằ
 
 - **Backend:** REST API bằng Spring Boot, xác thực JWT, database migration bằng Flyway.
 - **Frontend:** HTML + CSS + JavaScript thuần (không framework), được Spring Boot phục vụ luôn nên chỉ cần chạy 1 ứng dụng.
-- **Demo online:** _đang cập nhật_
+- **Demo online:** https://task-management-system-7qbe.onrender.com
+- **Swagger UI:** https://task-management-system-7qbe.onrender.com/swagger-ui.html
 - **Video demo:** _đang cập nhật_
 
 > **Tài khoản demo** (có sẵn dữ liệu mẫu): `alice@example.com` / `Password@123` hoặc `bob@example.com` / `Password@123`
@@ -80,7 +81,7 @@ bảng Kanban, danh sách và dashboard. Có thêm tính năng **tạo task bằ
 | Unit test, integration test | ✅ | 96 test |
 | Swagger / OpenAPI | ✅ | Có mô tả, ví dụ và mã lỗi cho từng API |
 | CI pipeline chạy test khi push | ✅ | GitHub Actions: chạy test, rồi dựng Docker Compose và gọi thử API |
-| Deploy demo lên cloud | 🔄 Đang làm | Render (app) + TiDB Cloud Starter (database) |
+| Deploy demo lên cloud | ✅ | Render (app) + TiDB Cloud Starter (database). Xem [Deploy](#9-deploy) |
 
 ### Chức năng làm thêm
 
@@ -444,7 +445,7 @@ Xem kết quả ở tab **Actions** trên GitHub.
 
 ## 9. Deploy
 
-Kế hoạch deploy miễn phí:
+Bản demo chạy tại **https://task-management-system-7qbe.onrender.com**, dùng toàn bộ dịch vụ miễn phí:
 
 | Thành phần | Nền tảng | Ghi chú |
 |---|---|---|
@@ -470,7 +471,7 @@ Những điểm đã chuẩn bị cho deploy:
 - Đã chạy thử đầy đủ migration và API trên TiDB. TiDB bỏ qua ràng buộc `CHECK`, nhưng app vẫn validate dữ liệu ở tầng API nên không ảnh hưởng.
 
 > **Lưu ý gói Free của Render:** app tự ngủ sau khoảng 15 phút không có ai truy cập.
-> Lần truy cập đầu tiên sau đó cần **1–2 phút** để khởi động lại.
+> Lần truy cập đầu tiên sau đó cần **1–2 phút** để khởi động lại, những lần sau sẽ nhanh bình thường.
 
 ---
 
