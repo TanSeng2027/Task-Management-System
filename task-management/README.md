@@ -5,7 +5,7 @@
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.2-6DB33F?logo=springboot&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8.4-4479A1?logo=mysql&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-96%20passed-brightgreen)
+![Tests](https://img.shields.io/badge/tests-98%20passed-brightgreen)
 
 Ứng dụng quản lý công việc cá nhân, làm theo đề bài tuyển dụng Intern (Mini Project Backend / Fullstack).
 Người dùng đăng ký tài khoản rồi tạo, sửa, xóa, tìm kiếm và theo dõi tiến độ công việc của mình trên
@@ -78,7 +78,7 @@ bảng Kanban, danh sách và dashboard. Có thêm tính năng **tạo task bằ
 |---|---|---|
 | Giao diện Kanban, kéo thả task giữa các trạng thái | ✅ | Có thêm chế độ xem dạng danh sách |
 | Docker Compose | ✅ | MySQL + app, 1 lệnh là chạy |
-| Unit test, integration test | ✅ | 96 test |
+| Unit test, integration test | ✅ | 98 test |
 | Swagger / OpenAPI | ✅ | Có mô tả, ví dụ và mã lỗi cho từng API |
 | CI pipeline chạy test khi push | ✅ | GitHub Actions: chạy test, rồi dựng Docker Compose và gọi thử API |
 | Deploy demo lên cloud | ✅ | Render (app) + TiDB Cloud Starter (database). Xem [Deploy](#9-deploy) |
@@ -92,6 +92,11 @@ bảng Kanban, danh sách và dashboard. Có thêm tính năng **tạo task bằ
 - Ô nhập ngày theo định dạng Việt Nam `dd/mm/yyyy`, có nút mở lịch.
 - Format lỗi JSON thống nhất cho mọi API, kèm lỗi chi tiết theo từng field khi dữ liệu không hợp lệ.
 - Job chạy mỗi giờ để dọn các token đã đăng xuất và đã hết hạn.
+- Bảo mật phía trình duyệt:
+  - Header **Content-Security-Policy**: chỉ cho chạy script và gọi API của chính web, nên kể cả có lỗi XSS thì mã lạ cũng không chạy được.
+  - Chống **clickjacking**: trang web khác không nhúng được app vào iframe.
+  - Token lưu trong `sessionStorage`: đóng tab hoặc tắt trình duyệt là tự đăng xuất, an toàn trên máy dùng chung.
+  - Frontend chỉ gửi token tới chính server của app, không gửi sang tên miền khác.
 
 ### Chưa hoàn thành / hướng phát triển
 
@@ -221,6 +226,7 @@ Chi tiết và ví dụ có trong [.env.example](.env.example).
 ### Giao diện web
 
 1. Mở http://localhost:8080 và đăng nhập bằng tài khoản demo (bấm **Điền sẵn** để tự điền), hoặc chọn **Đăng ký** để tạo tài khoản mới.
+   Phiên đăng nhập gắn với tab đang mở: tải lại trang vẫn giữ đăng nhập, còn mở tab mới hoặc mở lại trình duyệt thì cần đăng nhập lại.
 2. **Dashboard:** xem tổng số task, số task theo trạng thái, số task quá hạn và các task sắp đến hạn.
 3. **Công việc:**
    - **Bảng Kanban:** kéo thả task giữa 3 cột _Cần làm_, _Đang làm_, _Hoàn thành_ để đổi trạng thái.
@@ -422,14 +428,14 @@ Luồng xử lý một request: `JwtAuthenticationFilter` kiểm tra token → `
 ./mvnw test          # cmd: mvnw test   ·   PowerShell: .\mvnw test
 ```
 
-Test dùng H2 và profile `test` riêng, **không cần** file `.env` hay database ngoài. Kết quả: **96 test, tất cả pass**.
+Test dùng H2 và profile `test` riêng, **không cần** file `.env` hay database ngoài. Kết quả: **98 test, tất cả pass**.
 
 | Nhóm | Nội dung kiểm tra |
 |---|---|
 | Unit test service | Tạo, sửa, xóa task, kiểm tra quyền sở hữu, tính dashboard, xử lý kết quả AI |
 | Unit test security | Tạo và kiểm tra JWT, token hết hạn, sai chữ ký, danh sách token đã thu hồi |
 | Unit test AI | Giới hạn theo user và theo cả app, gọi lại khi Gemini quá tải, xử lý lỗi (giả lập server Gemini, không gọi thật) |
-| Integration test API | Gọi API thật qua MockMvc với database H2: đăng ký, đăng nhập, đăng xuất, CRUD, tìm kiếm, lọc, phân trang, dashboard, mã lỗi, **user A không xem/sửa/xóa được task của user B** |
+| Integration test API | Gọi API thật qua MockMvc với database H2: đăng ký, đăng nhập, đăng xuất, CRUD, tìm kiếm, lọc, phân trang, dashboard, mã lỗi, header bảo mật (CSP, chống clickjacking), **user A không xem/sửa/xóa được task của user B** |
 
 ### CI (GitHub Actions)
 
