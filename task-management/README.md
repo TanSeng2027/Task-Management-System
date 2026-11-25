@@ -15,7 +15,7 @@ bảng Kanban, danh sách và dashboard. Có thêm tính năng **tạo task bằ
 - **Frontend:** HTML + CSS + JavaScript thuần (không framework), được Spring Boot phục vụ luôn nên chỉ cần chạy 1 ứng dụng.
 - **Demo online:** https://task-management-system-7qbe.onrender.com
 - **Swagger UI:** https://task-management-system-7qbe.onrender.com/swagger-ui.html
-- **Video demo:** _đang cập nhật_
+- **Video demo:** https://youtu.be/lpKWd62n6PY 
 
 > **Tài khoản demo** (có sẵn dữ liệu mẫu): `alice@example.com` / `Password@123` hoặc `bob@example.com` / `Password@123`
 
