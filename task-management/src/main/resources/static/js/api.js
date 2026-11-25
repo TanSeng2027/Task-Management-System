@@ -1,23 +1,11 @@
-/**
- * Gọi REST API của backend.
- * - Tự gắn header "Authorization: Bearer <token>"
- * - Lỗi từ server (ErrorResponse) được chuyển thành ApiError có message + lỗi từng field
- * - Gặp 401 trên API cần đăng nhập → xóa token, bắn sự kiện "auth:expired" để quay về màn hình đăng nhập
- */
 
 const TOKEN_KEY = 'taskManager.token';
 const USER_KEY = 'taskManager.user';
 
-// Token + thông tin user lưu trong sessionStorage, KHÔNG dùng localStorage:
-// đóng tab / tắt trình duyệt là tự đăng xuất, nên trên máy dùng chung người sau không vào được
-// tài khoản (và không thấy email, họ tên) của người trước dù họ quên bấm "Đăng xuất".
-// Tải lại trang (F5) vẫn giữ đăng nhập. Rủi ro XSS đọc token được giảm thêm bằng header
-// Content-Security-Policy ở backend (xem SecurityConfig).
 const store = (() => {
   try { return window.sessionStorage; } catch { return null; } // có thể bị chặn (chế độ riêng tư...)
 })();
 
-// Bản cũ lưu trong localStorage: xóa đi để không còn sót token / thông tin cá nhân trên máy
 try {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);

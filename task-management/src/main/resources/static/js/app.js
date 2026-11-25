@@ -1,13 +1,3 @@
-/**
- * Task Manager - frontend (JavaScript thuần, không cần build).
- *
- * Màn hình:
- *   - Đăng nhập / Đăng ký
- *   - #/dashboard : thống kê + task sắp đến hạn
- *   - #/tasks     : Kanban board (kéo thả đổi trạng thái) và List (tìm kiếm, lọc, phân trang)
- *
- * An toàn: mọi dữ liệu từ người dùng đều hiển thị bằng textContent (hàm h()), không dùng innerHTML → tránh XSS.
- */
 import { api, auth } from './api.js';
 
 // ============================================================================
@@ -831,11 +821,6 @@ function bindEvents() {
   $$('[data-auth-tab]').forEach((b) => b.addEventListener('click', () => switchAuthTab(b.dataset.authTab)));
   $('#login-form').addEventListener('submit', handleLogin);
   $('#register-form').addEventListener('submit', handleRegister);
-  $('#fill-demo').addEventListener('click', () => {
-    const f = $('#login-form').elements;
-    f.email.value = 'alice@example.com';
-    f.password.value = 'Password@123';
-  });
   $('#logout-btn').addEventListener('click', logout);
 
   // Token hết hạn / bị thu hồi khi đang dùng

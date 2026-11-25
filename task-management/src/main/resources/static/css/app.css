@@ -176,12 +176,6 @@ select { cursor: pointer; }
 .segment { border: 0; background: transparent; padding: 8px; border-radius: 9px; font: inherit; font-weight: 600; color: var(--muted); cursor: pointer; }
 .segment.active { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
 
-.demo-hint {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px;
-  font-size: .85rem; color: var(--muted);
-  padding: 10px 12px; border: 1px dashed var(--border); border-radius: 10px;
-}
-
 /* ----------------------------- Bố cục chính ----------------------------- */
 
 .layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); min-height: 100%; }
